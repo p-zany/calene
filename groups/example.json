@@ -1,0 +1,6 @@
+{
+	"users": {
+		"ali": { "password": "1234", "permissions": "op" },
+		"bob": { "password": "1234", "permissions": "op" }
+	}
+}

@@ -1,0 +1,309 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-canvas: #09090b;
+	--color-surface: #121216;
+	--color-ink: #f4f4f5;
+	--color-ink-muted: #a1a1aa;
+	--color-accent: #60a5fa;
+	--color-live: #34d399;
+	--color-danger: #fb7185;
+}
+
+@layer base {
+	html,
+	body,
+	#app {
+		height: 100dvh;
+		width: 100vw;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: var(--color-canvas);
+		color: var(--color-ink);
+		font-family:
+			-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'PingFang SC',
+			'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+		overscroll-behavior: none;
+		-webkit-tap-highlight-color: transparent;
+	}
+}
+
+/* Dark Cinema Glassmorphism surfaces (zero inline styles, 100% CSP safe) */
+.glass-panel {
+	background-color: rgb(24 24 28 / 0.64);
+	backdrop-filter: blur(22px) saturate(160%);
+	-webkit-backdrop-filter: blur(22px) saturate(160%);
+	border: 1px solid rgb(255 255 255 / 0.11);
+	box-shadow: 0 20px 50px rgb(0 0 0 / 0.48);
+}
+
+.glass-pill {
+	background-color: rgb(24 24 28 / 0.58);
+	backdrop-filter: blur(18px) saturate(150%);
+	-webkit-backdrop-filter: blur(18px) saturate(150%);
+	border: 1px solid rgb(255 255 255 / 0.12);
+	box-shadow: 0 10px 30px rgb(0 0 0 / 0.36);
+}
+
+/* Safe-area spacing helpers for iPhone Dynamic Island & Home Indicator */
+.safe-top {
+	padding-top: max(1rem, env(safe-area-inset-top));
+}
+
+.safe-bottom {
+	padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.safe-inset-bottom {
+	bottom: max(1.125rem, env(safe-area-inset-bottom));
+}
+
+.safe-inset-top {
+	top: max(1rem, env(safe-area-inset-top));
+}
+
+/* Clearance above the floating ControlDock (zero overlap across desktop split-screen & safe-area mobile) */
+.above-dock-bottom {
+	bottom: calc(max(1.125rem, env(safe-area-inset-bottom)) + 4.75rem);
+}
+
+.chat-drawer-bounds {
+	top: max(0.75rem, env(safe-area-inset-top));
+	bottom: max(0.75rem, env(safe-area-inset-bottom));
+	right: 0.75rem;
+	left: 0.75rem;
+}
+
+@media (min-width: 640px) {
+	.chat-drawer-bounds {
+		top: max(1rem, env(safe-area-inset-top));
+		bottom: calc(max(1.125rem, env(safe-area-inset-bottom)) + 4.75rem);
+		right: max(1rem, env(safe-area-inset-right));
+		left: auto;
+	}
+}
+
+/* PWA Window Controls Overlay drag title region */
+.pwa-titlebar-pad {
+	padding-top: max(1rem, env(titlebar-area-height, 0px), env(safe-area-inset-top));
+}
+
+/* View Transitions named elements */
+.vt-partner {
+	view-transition-name: partner-video;
+}
+
+.vt-self {
+	view-transition-name: self-video;
+}
+
+.vt-screen {
+	view-transition-name: screen-stage;
+}
+
+::view-transition-old(partner-video),
+::view-transition-new(partner-video),
+::view-transition-old(self-video),
+::view-transition-new(self-video),
+::view-transition-old(screen-stage),
+::view-transition-new(screen-stage) {
+	animation-duration: 320ms;
+	animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Speaking ambient glow */
+.speaking-ring {
+	box-shadow:
+		0 0 0 2px rgb(52 211 153 / 0.85),
+		0 0 24px rgb(52 211 153 / 0.35);
+}
+
+/* Self-view magnetic corner positions (CSP-safe class-driven positioning) */
+.pip-corner-tr {
+	top: max(1rem, env(safe-area-inset-top));
+	right: max(1rem, env(safe-area-inset-right));
+}
+
+.pip-corner-tl {
+	top: max(1rem, env(safe-area-inset-top));
+	left: max(1rem, env(safe-area-inset-left));
+}
+
+.pip-corner-br {
+	bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5rem);
+	right: max(1rem, env(safe-area-inset-right));
+}
+
+.pip-corner-bl {
+	bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5rem);
+	left: max(1rem, env(safe-area-inset-left));
+}
+
+/* Native Popover + CSS Anchor Positioning (Top Layer, zero JS inline style positioning) */
+.anchor-audio-btn {
+	anchor-name: --calene-audio-btn;
+}
+
+.anchor-more-btn {
+	anchor-name: --calene-more-btn;
+}
+
+.anchor-react-btn {
+	anchor-name: --calene-react-btn;
+}
+
+.calene-popover {
+	margin: 0;
+	inset: auto;
+	color: var(--color-ink);
+	opacity: 0;
+	transform: translateY(6px) scale(0.97);
+	transition:
+		opacity 160ms ease,
+		transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+		overlay 180ms allow-discrete,
+		display 180ms allow-discrete;
+}
+
+.calene-popover:popover-open {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+@starting-style {
+	.calene-popover:popover-open {
+		opacity: 0;
+		transform: translateY(8px) scale(0.96);
+	}
+}
+
+/* Fallback placement for browsers without CSS Anchor Positioning (centered bottom sheet) */
+.calene-popover-audio,
+.calene-popover-more,
+.calene-popover-react {
+	position: fixed;
+	bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5.25rem);
+	left: 50%;
+	translate: -50% 0;
+}
+
+@supports (position-anchor: --x) and (position-area: top) {
+	.calene-popover-audio {
+		position-anchor: --calene-audio-btn;
+		position-area: top center;
+		position-try-fallbacks: flip-inline;
+		bottom: auto;
+		left: auto;
+		translate: none;
+		margin-bottom: 0.75rem;
+	}
+
+	.calene-popover-more {
+		position-anchor: --calene-more-btn;
+		position-area: top span-left;
+		position-try-fallbacks: flip-inline;
+		bottom: auto;
+		left: auto;
+		translate: none;
+		margin-bottom: 0.75rem;
+	}
+
+	.calene-popover-react {
+		position-anchor: --calene-react-btn;
+		position-area: top center;
+		position-try-fallbacks: flip-inline;
+		bottom: auto;
+		left: auto;
+		translate: none;
+		margin-bottom: 0.75rem;
+	}
+}
+
+/* Floating reactions animation (5 deterministic horizontal lanes, zero inline style) */
+@keyframes float-up-reaction {
+	0% {
+		opacity: 0;
+		transform: translateY(18px) scale(0.6);
+	}
+	15% {
+		opacity: 1;
+		transform: translateY(-10px) scale(1.1);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-210px) scale(0.95);
+	}
+}
+
+.reaction-float {
+	animation: float-up-reaction 2.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reaction-slot-0 {
+	right: 14%;
+}
+.reaction-slot-1 {
+	right: 22%;
+}
+.reaction-slot-2 {
+	right: 30%;
+}
+.reaction-slot-3 {
+	right: 38%;
+}
+.reaction-slot-4 {
+	right: 46%;
+}
+
+/* Camera shutter flash */
+@keyframes shutter-flash {
+	0% {
+		opacity: 0.85;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.shutter-overlay {
+	animation: shutter-flash 240ms ease-out forwards;
+}
+
+/* Subtle breathing indicator */
+@keyframes soft-pulse {
+	0%,
+	100% {
+		opacity: 0.55;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.06);
+	}
+}
+
+.soft-pulse {
+	animation: soft-pulse 2.2s ease-in-out infinite;
+}
+
+/* Custom sleek dark range slider */
+input[type='range'].calene-slider {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 5px;
+	border-radius: 9999px;
+	background: rgb(255 255 255 / 0.18);
+	outline: none;
+}
+
+input[type='range'].calene-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 14px;
+	height: 14px;
+	border-radius: 9999px;
+	background: #f4f4f5;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgb(0 0 0 / 0.45);
+}
