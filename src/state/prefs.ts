@@ -79,7 +79,7 @@ export function syncGroupUrl(group: string): void {
 	const target = `/group/${clean
 		.split('/')
 		.map((s) => encodeURIComponent(s))
-		.join('/')}`;
+		.join('/')}/`;
 	if (window.location.pathname !== target) {
 		try {
 			window.history.replaceState(null, '', target);

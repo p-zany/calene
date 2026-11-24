@@ -41,7 +41,20 @@ npm run check   # TypeScript & Svelte 5 类型检查
 npm run build   # 生成 dist/（同时包含 index.html 与 galene.html 双入口）
 ```
 
-部署方式二选一：
+部署方式：
 
-1. **直接替换 Galène `static/` 目录**：将 `dist/` 内所有文件复制到 Galène 的 `static/` 目录，同源零配置即可支持 `/` 与 `/group/<name>`。
-2. **独立静态托管 + 反代**：部署 `dist/` 到 Nginx / Caddy / Cloudflare Pages，反代 `/ws` 与 `/group/*/.status`（含 `.status.json`）到 Galène 服务（或构建时通过 `VITE_GALENE_ORIGIN` 指定服务端地址）。
+1. **NixOS Flake 集成（推荐）**：本仓库导出 `packages.<system>.default` 与 `overlays.default`，构建产物即完整静态目录，可直接挂载到 `services.galene.staticDir`：
+
+   ```nix
+   # flake.nix
+   inputs.calene = {
+     url = "github:p-zany/calene";
+     inputs.nixpkgs.follows = "nixpkgs";
+   };
+
+   # NixOS 模块中
+   services.galene.staticDir = inputs.calene.packages.${pkgs.stdenv.hostPlatform.system}.default;
+   ```
+
+2. **直接替换 Galène `static/` 目录**：将 `dist/` 内所有文件复制到 Galène 的 `static/` 目录，同源零配置即可支持 `/` 与 `/group/<name>/`。
+3. **独立静态托管 + 反代**：部署 `dist/` 到 Nginx / Caddy / Cloudflare Pages，反代 `/ws` 与 `/group/*/.status`（含 `.status.json`）到 Galène 服务（或构建时通过 `VITE_GALENE_ORIGIN` 指定服务端地址）。
