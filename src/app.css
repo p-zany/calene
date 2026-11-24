@@ -89,6 +89,24 @@
 	padding-top: max(1rem, env(titlebar-area-height, 0px), env(safe-area-inset-top));
 }
 
+.pwa-drag-strip {
+	display: none;
+}
+
+@media (display-mode: window-controls-overlay) {
+	.pwa-drag-strip {
+		display: block;
+		position: fixed;
+		top: 0;
+		left: env(titlebar-area-x, 0px);
+		width: env(titlebar-area-width, 100%);
+		height: max(2rem, env(titlebar-area-height, 2.25rem));
+		z-index: 35;
+		app-region: drag;
+		-webkit-app-region: drag;
+	}
+}
+
 /* View Transitions named elements */
 .vt-partner {
 	view-transition-name: partner-video;

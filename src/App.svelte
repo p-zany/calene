@@ -99,6 +99,9 @@
 	ondragleave={handleDragLeave}
 	ondrop={handleDrop}
 >
+	<!-- Invisible top drag strip active only in desktop PWA Window Controls Overlay mode -->
+	<div class="pwa-drag-strip" aria-hidden="true"></div>
+
 	{#if store.phase === 'lobby'}
 		<LobbyMirror {store} />
 	{:else}
