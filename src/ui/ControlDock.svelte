@@ -78,7 +78,9 @@
 		visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
 	} ${store.chatOpen ? 'max-sm:pointer-events-none max-sm:opacity-0' : ''}`}
 >
-	<div class="glass-panel flex items-center gap-1.5 rounded-full px-2.5 py-2 sm:gap-2 sm:px-3">
+	<div
+		class="glass-panel flex max-w-[calc(100vw-1rem)] items-center gap-1 rounded-full px-2 py-1.5 sm:gap-2 sm:px-3 sm:py-2"
+	>
 		<!-- Mic toggle -->
 		<button
 			type="button"
@@ -88,16 +90,16 @@
 			}}
 			aria-label={store.micOn ? '静音麦克风' : '开启麦克风'}
 			title={store.micOn ? '静音麦克风' : '开启麦克风'}
-			class={`relative flex size-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95 ${
+			class={`relative flex size-10 cursor-pointer items-center justify-center rounded-full transition active:scale-95 sm:size-11 ${
 				store.micOn
 					? 'bg-white/12 text-ink hover:bg-white/20'
 					: 'bg-danger/85 text-white hover:bg-danger'
 			} ${store.micOn && store.localSpeaking ? 'speaking-ring' : ''}`}
 		>
 			{#if store.micOn}
-				<Mic class="size-5" />
+				<Mic class="size-4 sm:size-5" />
 			{:else}
-				<MicOff class="size-5" />
+				<MicOff class="size-4 sm:size-5" />
 			{/if}
 		</button>
 
@@ -110,16 +112,16 @@
 			}}
 			aria-label={store.camOn ? '关闭摄像头' : '开启摄像头'}
 			title={store.camOn ? '关闭摄像头' : '开启摄像头'}
-			class={`flex size-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95 ${
+			class={`flex size-10 cursor-pointer items-center justify-center rounded-full transition active:scale-95 sm:size-11 ${
 				store.camOn
 					? 'bg-white/12 text-ink hover:bg-white/20'
 					: 'bg-danger/85 text-white hover:bg-danger'
 			}`}
 		>
 			{#if store.camOn}
-				<Video class="size-5" />
+				<Video class="size-4 sm:size-5" />
 			{:else}
-				<VideoOff class="size-5" />
+				<VideoOff class="size-4 sm:size-5" />
 			{/if}
 		</button>
 
@@ -133,9 +135,9 @@
 				}}
 				aria-label="翻转摄像头"
 				title="翻转摄像头"
-				class="flex size-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-ink transition hover:bg-white/20 active:scale-95"
+				class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-ink transition hover:bg-white/20 active:scale-95 sm:size-11"
 			>
-				<SwitchCamera class="size-5" />
+				<SwitchCamera class="size-4 sm:size-5" />
 			</button>
 		{/if}
 
@@ -149,13 +151,13 @@
 				}}
 				aria-label={store.localScreenStream ? '停止共享屏幕' : '共享屏幕'}
 				title={store.localScreenStream ? '停止共享屏幕' : '共享屏幕'}
-				class={`flex size-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95 ${
+				class={`flex size-10 cursor-pointer items-center justify-center rounded-full transition active:scale-95 sm:size-11 ${
 					store.localScreenStream
 						? 'bg-accent text-canvas hover:bg-accent/90'
 						: 'bg-white/10 text-ink hover:bg-white/20'
 				}`}
 			>
-				<MonitorUp class="size-5" />
+				<MonitorUp class="size-4 sm:size-5" />
 			</button>
 		{/if}
 
@@ -168,9 +170,9 @@
 			}}
 			aria-label="拍照留念"
 			title="拍照留念"
-			class="flex size-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-ink transition hover:bg-white/20 active:scale-95"
+			class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-ink transition hover:bg-white/20 active:scale-95 sm:size-11"
 		>
-			<Aperture class="size-5" />
+			<Aperture class="size-4 sm:size-5" />
 		</button>
 
 		<!-- Audio & Devices Native Popover trigger -->
@@ -180,14 +182,14 @@
 			onclick={onInteract}
 			aria-label="音量与设备"
 			title="音量与设备"
-			class={`anchor-audio-btn flex size-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95 ${
+			class={`anchor-audio-btn flex size-10 cursor-pointer items-center justify-center rounded-full transition active:scale-95 sm:size-11 ${
 				store.masterMuted ? 'bg-danger/80 text-white' : 'bg-white/10 text-ink hover:bg-white/20'
 			}`}
 		>
 			{#if store.masterMuted}
-				<VolumeX class="size-5" />
+				<VolumeX class="size-4 sm:size-5" />
 			{:else}
-				<Volume2 class="size-5" />
+				<Volume2 class="size-4 sm:size-5" />
 			{/if}
 		</button>
 
@@ -212,11 +214,11 @@
 			}}
 			aria-label="消息"
 			title="消息"
-			class={`relative flex size-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95 ${
+			class={`relative flex size-10 cursor-pointer items-center justify-center rounded-full transition active:scale-95 sm:size-11 ${
 				store.chatOpen ? 'bg-ink text-canvas' : 'bg-white/10 text-ink hover:bg-white/20'
 			}`}
 		>
-			<MessageCircle class="size-5" />
+			<MessageCircle class="size-4 sm:size-5" />
 			{#if store.unreadCount > 0}
 				<span
 					class="absolute top-1.5 right-1.5 flex size-4 items-center justify-center rounded-full bg-accent text-[10px] font-semibold text-canvas"
@@ -233,9 +235,9 @@
 			onclick={onInteract}
 			aria-label="更多功能"
 			title="更多功能"
-			class="anchor-more-btn flex size-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-ink transition hover:bg-white/20 active:scale-95"
+			class="anchor-more-btn flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-ink transition hover:bg-white/20 active:scale-95 sm:size-11"
 		>
-			<MoreHorizontal class="size-5" />
+			<MoreHorizontal class="size-4 sm:size-5" />
 		</button>
 
 		<!-- Hang up -->
@@ -244,9 +246,9 @@
 			onclick={() => store.leaveRoom()}
 			aria-label="挂断"
 			title="挂断"
-			class="ml-0.5 flex h-11 cursor-pointer items-center justify-center rounded-full bg-danger px-4 text-white transition hover:bg-rose-500 active:scale-95"
+			class="ml-0.5 flex h-10 cursor-pointer items-center justify-center rounded-full bg-danger px-3 text-white transition hover:bg-rose-500 active:scale-95 sm:h-11 sm:px-4"
 		>
-			<PhoneOff class="size-5" />
+			<PhoneOff class="size-4 sm:size-5" />
 		</button>
 	</div>
 </nav>

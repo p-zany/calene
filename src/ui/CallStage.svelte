@@ -196,7 +196,7 @@
 		<!-- State 2: 1-on-1 Face-to-Face -->
 		{#if store.swappedSelfMain}
 			<!-- Swapped: Local full-bleed, Partner in PiP -->
-			<div class="vt-self h-full w-full">
+			<div class="vt-self absolute inset-0">
 				{#if store.localStream && store.camOn}
 					<VideoSurface
 						stream={store.localStream}
@@ -241,7 +241,7 @@
 		{:else}
 			<!-- Default: Partner full-bleed, Self in magnetic PiP -->
 			<div
-				class={`vt-partner h-full w-full ${partnerSpeaking ? 'ring-2 ring-live/45 ring-inset' : ''}`}
+				class={`vt-partner absolute inset-0 ${partnerSpeaking ? 'ring-2 ring-live/45 ring-inset' : ''}`}
 			>
 				{#if store.primaryPartnerStream}
 					<VideoSurface

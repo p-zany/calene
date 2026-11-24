@@ -12,10 +12,11 @@
 
 @layer base {
 	html,
-	body,
-	#app {
-		height: 100dvh;
-		width: 100vw;
+	body {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
@@ -26,6 +27,14 @@
 			'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 		overscroll-behavior: none;
 		-webkit-tap-highlight-color: transparent;
+	}
+
+	#app {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
 	}
 }
 
@@ -48,45 +57,49 @@
 
 /* Safe-area spacing helpers for iPhone Dynamic Island & Home Indicator */
 .safe-top {
-	padding-top: max(1rem, env(safe-area-inset-top));
+	padding-top: max(1rem, calc(env(safe-area-inset-top, 0px) + 1rem));
 }
 
 .safe-bottom {
-	padding-bottom: max(1rem, env(safe-area-inset-bottom));
+	padding-bottom: max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
 }
 
 .safe-inset-bottom {
-	bottom: max(1.125rem, env(safe-area-inset-bottom));
+	bottom: max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
 }
 
 .safe-inset-top {
-	top: max(1rem, env(safe-area-inset-top));
+	top: max(1rem, calc(env(safe-area-inset-top, 0px) + 1rem));
 }
 
 /* Clearance above the floating ControlDock (zero overlap across desktop split-screen & safe-area mobile) */
 .above-dock-bottom {
-	bottom: calc(max(1.125rem, env(safe-area-inset-bottom)) + 4.75rem);
+	bottom: calc(max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem)) + 4.5rem);
 }
 
 .chat-drawer-bounds {
-	top: max(0.75rem, env(safe-area-inset-top));
-	bottom: max(0.75rem, env(safe-area-inset-bottom));
+	top: max(0.75rem, calc(env(safe-area-inset-top, 0px) + 1rem));
+	bottom: max(0.75rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
 	right: 0.75rem;
 	left: 0.75rem;
 }
 
 @media (min-width: 640px) {
 	.chat-drawer-bounds {
-		top: max(1rem, env(safe-area-inset-top));
-		bottom: calc(max(1.125rem, env(safe-area-inset-bottom)) + 4.75rem);
-		right: max(1rem, env(safe-area-inset-right));
+		top: max(1rem, calc(env(safe-area-inset-top, 0px) + 1rem));
+		bottom: calc(max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem)) + 4.75rem);
+		right: max(1rem, env(safe-area-inset-right, 0px));
 		left: auto;
 	}
 }
 
 /* PWA Window Controls Overlay drag title region */
 .pwa-titlebar-pad {
-	padding-top: max(1rem, env(titlebar-area-height, 0px), env(safe-area-inset-top));
+	padding-top: max(
+		1rem,
+		env(titlebar-area-height, 0px),
+		calc(env(safe-area-inset-top, 0px) + 1rem)
+	);
 }
 
 .pwa-drag-strip {
@@ -139,23 +152,23 @@
 
 /* Self-view magnetic corner positions (CSP-safe class-driven positioning) */
 .pip-corner-tr {
-	top: max(1rem, env(safe-area-inset-top));
-	right: max(1rem, env(safe-area-inset-right));
+	top: max(1rem, calc(env(safe-area-inset-top, 0px) + 1rem));
+	right: max(1rem, env(safe-area-inset-right, 0px));
 }
 
 .pip-corner-tl {
-	top: max(1rem, env(safe-area-inset-top));
-	left: max(1rem, env(safe-area-inset-left));
+	top: max(1rem, calc(env(safe-area-inset-top, 0px) + 1rem));
+	left: max(1rem, env(safe-area-inset-left, 0px));
 }
 
 .pip-corner-br {
-	bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5rem);
-	right: max(1rem, env(safe-area-inset-right));
+	bottom: calc(max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem)) + 4.75rem);
+	right: max(1rem, env(safe-area-inset-right, 0px));
 }
 
 .pip-corner-bl {
-	bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5rem);
-	left: max(1rem, env(safe-area-inset-left));
+	bottom: calc(max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem)) + 4.75rem);
+	left: max(1rem, env(safe-area-inset-left, 0px));
 }
 
 /* Native Popover + CSS Anchor Positioning (Top Layer, zero JS inline style positioning) */

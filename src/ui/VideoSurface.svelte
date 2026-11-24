@@ -195,7 +195,7 @@
 		bind:this={videoEl}
 		autoplay
 		playsinline
-		class={`h-full w-full transition-opacity duration-300 ${
+		class={`absolute inset-0 h-full min-h-full w-full min-w-full transition-opacity duration-300 ${
 			fit === 'cover' ? 'object-cover' : 'object-contain'
 		} ${mirror ? '-scale-x-100' : ''}`}
 	>
