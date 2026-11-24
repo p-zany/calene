@@ -20,9 +20,14 @@
 # 首次安装依赖
 devenv shell -- npm install
 
-# 一键同时启动本地 Galène (127.0.0.1:8443) 与 Vite 前端热更新 (localhost:5173)
+# 一键同时启动本地 Galène (127.0.0.1:8443)、Vite 热更新 (5173) 与 Tailscale HTTPS 代理 (443)
 # 默认加载 ./groups/example.json（测试账号：ali / bob，密码：1234）
+# iPhone 直接打开 Tailscale 打印的 https://<host>.<tailnet>.ts.net/group/example/ 即可秒级热更新调试
+# 附带调试浮层：URL 加 ?debug=1，或在通话内连点 3 下左上角房间胶囊即可开关视口/安全区/视频盒模型数值
 devenv up
+
+# 异常退出时手动清理 tailscale serve 规则
+devenv shell -- serve-reset
 
 # 发版前验证生产构建 + Galène 严格 CSP（方式 2：直接挂载 dist/ 到 Galène -static）
 devenv shell -- preview-galene

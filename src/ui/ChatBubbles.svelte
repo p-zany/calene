@@ -45,10 +45,10 @@
 </script>
 
 <!-- Floating emoji reactions -->
-<div class="pointer-events-none fixed inset-0 z-30 overflow-hidden">
+<div class="pointer-events-none absolute inset-0 z-30 overflow-hidden">
 	{#each reactions as r (r.id)}
 		<div
-			class={`reaction-float safe-inset-bottom fixed bottom-24 flex flex-col items-center gap-0.5 reaction-slot-${r.slot}`}
+			class={`reaction-float safe-inset-bottom absolute bottom-24 flex flex-col items-center gap-0.5 reaction-slot-${r.slot}`}
 		>
 			<span class="text-4xl drop-shadow-lg">{r.emoji}</span>
 		</div>
@@ -58,7 +58,7 @@
 <!-- Auto-fading ephemeral chat bubbles (when drawer is closed) -->
 {#if !open && bubbles.length > 0}
 	<div
-		class="above-dock-bottom pointer-events-none fixed left-4 z-30 flex max-w-xs flex-col gap-2 sm:max-w-sm"
+		class="above-dock-bottom pointer-events-none absolute left-4 z-30 flex max-w-xs flex-col gap-2 sm:max-w-sm"
 	>
 		{#each bubbles as msg (msg.id)}
 			<div
@@ -89,7 +89,7 @@
 <!-- Lightweight expandable chat drawer -->
 {#if open}
 	<aside
-		class="glass-panel chat-drawer-bounds fixed z-50 flex flex-col rounded-3xl sm:w-full sm:max-w-sm"
+		class="glass-panel chat-drawer-bounds absolute z-50 flex flex-col rounded-3xl sm:w-full sm:max-w-sm"
 	>
 		<header class="flex items-center justify-between border-b border-white/10 px-4 py-3">
 			<span class="text-sm font-medium text-ink">消息</span>

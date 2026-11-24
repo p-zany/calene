@@ -1,6 +1,7 @@
 {
-	"users": {
-		"ali": { "password": "1234", "permissions": "op" },
-		"bob": { "password": "1234", "permissions": "op" }
+	"allow-anonymous": true,
+	"wildcard-user": {
+		"password": { "type": "wildcard" },
+		"permissions": "op"
 	}
 }

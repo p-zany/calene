@@ -77,11 +77,15 @@ function getBaseOrigin(): string {
 }
 
 function resolveWsEndpoint(endpoint: string, baseOrigin: string): string {
-	if (endpoint.startsWith('ws://') || endpoint.startsWith('wss://')) {
-		return endpoint;
+	const url =
+		endpoint.startsWith('ws://') || endpoint.startsWith('wss://')
+			? new URL(endpoint)
+			: new URL(endpoint, baseOrigin);
+	if (window.location.protocol === 'https:' && url.protocol === 'ws:') {
+		url.protocol = 'wss:';
+	} else if (url.protocol === 'http:' || url.protocol === 'https:') {
+		url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
 	}
-	const url = new URL(endpoint, baseOrigin);
-	url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
 	return url.toString();
 }
 

@@ -16,7 +16,7 @@
 
 {#if dragActive}
 	<div
-		class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-canvas/70 backdrop-blur-md"
+		class="pointer-events-none absolute inset-0 z-50 flex items-center justify-center bg-canvas/70 backdrop-blur-md"
 	>
 		<div
 			class="glass-panel flex flex-col items-center gap-3 rounded-3xl border-dashed border-accent/60 px-10 py-8"
@@ -31,7 +31,7 @@
 {/if}
 
 {#if transfers.length > 0}
-	<div class="safe-inset-top fixed right-4 z-40 flex w-72 flex-col gap-2">
+	<div class="safe-inset-top absolute right-4 z-40 flex w-72 flex-col gap-2">
 		{#each transfers as item (item.id)}
 			<div class="glass-panel flex flex-col gap-2 rounded-2xl px-3.5 py-3">
 				<div class="flex items-start justify-between gap-2">

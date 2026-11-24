@@ -5,6 +5,7 @@
 	import CallStage from '@/ui/CallStage.svelte';
 	import ChatBubbles from '@/ui/ChatBubbles.svelte';
 	import ControlDock from '@/ui/ControlDock.svelte';
+	import DebugHud from '@/ui/DebugHud.svelte';
 	import DocPipView from '@/ui/DocPipView.svelte';
 	import FileDropOverlay from '@/ui/FileDropOverlay.svelte';
 	import LobbyMirror from '@/ui/LobbyMirror.svelte';
@@ -14,8 +15,26 @@
 
 	let hudVisible = $state(true);
 	let dragActive = $state(false);
+	let debugOpen = $state(
+		typeof window !== 'undefined' && /(?:^|[?&])debug=1(?:&|$)/.test(window.location.search)
+	);
 	let dragDepth = 0;
+	let badgeTapCount = 0;
+	let badgeTapTimer: ReturnType<typeof setTimeout> | null = null;
 	let idleTimer: ReturnType<typeof setTimeout> | null = null;
+
+	function handleRoomBadgeTap() {
+		badgeTapCount++;
+		if (badgeTapTimer) clearTimeout(badgeTapTimer);
+		if (badgeTapCount >= 3) {
+			badgeTapCount = 0;
+			debugOpen = !debugOpen;
+			return;
+		}
+		badgeTapTimer = setTimeout(() => {
+			badgeTapCount = 0;
+		}, 600);
+	}
 
 	function pokeHud() {
 		hudVisible = true;
@@ -105,7 +124,7 @@
 	{#if store.phase === 'lobby'}
 		<LobbyMirror {store} />
 	{:else}
-		<CallStage {store} {hudVisible} />
+		<CallStage {store} {hudVisible} onRoomBadgeTap={handleRoomBadgeTap} />
 
 		<ChatBubbles
 			messages={store.chatMessages}
@@ -136,13 +155,21 @@
 
 	<!-- Camera shutter flash feedback -->
 	{#if store.shutterFlash}
-		<div class="shutter-overlay pointer-events-none fixed inset-0 z-50 bg-white"></div>
+		<div class="shutter-overlay pointer-events-none absolute inset-0 z-50 bg-white"></div>
 	{/if}
+
+	<!-- Optional viewport & layout diagnostics (?debug=1 or triple-tap room pill) -->
+	<DebugHud
+		open={debugOpen}
+		fitMode={store.remoteObjectFit}
+		phase={store.phase}
+		onClose={() => (debugOpen = false)}
+	/>
 
 	<!-- Ephemeral glass notice pills (CSP-safe replacement for toast libraries) -->
 	{#if store.notices.length > 0}
 		<div
-			class="pwa-titlebar-pad pointer-events-none fixed top-2 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2"
+			class="pwa-titlebar-pad pointer-events-none absolute top-2 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2"
 		>
 			{#each store.notices as n (n.id)}
 				<div

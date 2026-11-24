@@ -74,7 +74,7 @@
 <nav
 	aria-label="通话控制栏"
 	onpointerenter={onInteract}
-	class={`safe-inset-bottom fixed left-1/2 z-40 -translate-x-1/2 transition-all duration-300 ${
+	class={`safe-inset-bottom absolute left-1/2 z-40 -translate-x-1/2 transition-all duration-300 ${
 		visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
 	} ${store.chatOpen ? 'max-sm:pointer-events-none max-sm:opacity-0' : ''}`}
 >

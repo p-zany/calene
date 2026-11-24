@@ -109,7 +109,7 @@
 		type="button"
 		onclick={() => onCollapsedChange(false)}
 		aria-label="展开本地画面"
-		class={`glass-pill fixed z-30 flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-2 text-xs text-ink/90 transition hover:bg-white/15 ${cornerClass} ${
+		class={`glass-pill absolute z-30 flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-2 text-xs text-ink/90 transition hover:bg-white/15 ${cornerClass} ${
 			speaking ? 'speaking-ring' : ''
 		}`}
 	>
@@ -130,7 +130,7 @@
 		onpointermove={handlePointerMove}
 		onpointerup={handlePointerUp}
 		onpointercancel={handlePointerUp}
-		class={`vt-self glass-panel group fixed z-30 aspect-[3/4] w-28 touch-none overflow-hidden rounded-2xl transition-[top,right,bottom,left,box-shadow] duration-300 sm:aspect-[16/10] sm:w-48 ${cornerClass} ${
+		class={`vt-self glass-panel group absolute z-30 aspect-[3/4] w-28 touch-none overflow-hidden rounded-2xl transition-[top,right,bottom,left,box-shadow] duration-300 sm:aspect-[16/10] sm:w-48 ${cornerClass} ${
 			dragging ? 'cursor-grabbing' : 'cursor-grab'
 		} ${speaking ? 'speaking-ring' : ''}`}
 	>

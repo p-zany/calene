@@ -10,9 +10,10 @@
 	interface Props {
 		store: CallStore;
 		hudVisible: boolean;
+		onRoomBadgeTap?: () => void;
 	}
 
-	let { store, hudVisible }: Props = $props();
+	let { store, hudVisible, onRoomBadgeTap }: Props = $props();
 	let partnerSpeaking = $state(false);
 	let screenContainerEl = $state<HTMLDivElement | null>(null);
 	let wheelForwardActive = $state(false);
@@ -45,11 +46,15 @@
 <div class="relative h-full w-full overflow-hidden bg-canvas">
 	<!-- Top minimal status badge (auto-hides with HUD) -->
 	<div
-		class={`pwa-titlebar-pad pointer-events-none fixed inset-x-0 top-0 z-20 flex items-center justify-between px-4 transition-opacity duration-300 ${
+		class={`pwa-titlebar-pad pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-4 transition-opacity duration-300 ${
 			hudVisible ? 'opacity-100' : 'opacity-0'
 		}`}
 	>
-		<div class="glass-pill flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-ink/90">
+		<button
+			type="button"
+			onclick={onRoomBadgeTap}
+			class="glass-pill pointer-events-auto flex cursor-pointer items-center gap-2 rounded-full px-3 py-1.5 text-xs text-ink/90"
+		>
 			<span class={`size-2 rounded-full ${store.peerCount > 0 ? 'bg-live' : 'bg-accent'}`}></span>
 			<span>{store.group}</span>
 			{#if store.activeScreen}
@@ -58,7 +63,7 @@
 					{store.activeScreen.isLocal ? '你正在投屏' : `${store.activeScreen.username} 正在投屏`}
 				</span>
 			{/if}
-		</div>
+		</button>
 	</div>
 
 	{#if store.phase === 'waiting'}
@@ -141,7 +146,9 @@
 			</div>
 
 			<!-- Desktop & Mobile Landscape Floating Reaction Strip (Partner + Self bubbles) -->
-			<div class="safe-inset-top fixed right-4 z-30 hidden flex-col gap-2.5 sm:flex landscape:flex">
+			<div
+				class="safe-inset-top absolute right-4 z-30 hidden flex-col gap-2.5 sm:flex landscape:flex"
+			>
 				{#if store.primaryPartnerStream}
 					<div
 						class={`vt-partner glass-panel relative aspect-[16/10] w-44 overflow-hidden rounded-2xl sm:w-52 ${
@@ -289,7 +296,7 @@
 	<!-- Elastic Multi-Device / 3rd-Person Fallback Strip -->
 	{#if store.extraStreams.length > 0}
 		<div
-			class="fixed bottom-24 left-4 z-30 flex flex-row gap-2 sm:top-16 sm:bottom-auto sm:flex-col"
+			class="absolute bottom-24 left-4 z-30 flex flex-row gap-2 sm:top-16 sm:bottom-auto sm:flex-col"
 		>
 			{#each store.extraStreams as extra (extra.id)}
 				<button

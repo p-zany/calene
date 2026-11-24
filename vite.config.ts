@@ -53,6 +53,7 @@ export default defineConfig(({ mode }) => {
 			}
 		},
 		server: {
+			allowedHosts: true,
 			proxy: {
 				'/ws': {
 					target: galeneTarget,

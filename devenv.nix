@@ -50,6 +50,32 @@
             condition = "process_healthy";
           };
         };
+        readiness_probe = {
+          http_get = {
+            host = "127.0.0.1";
+            port = 5173;
+            path = "/";
+          };
+          initial_delay_seconds = 1;
+          period_seconds = 2;
+        };
+      };
+    };
+
+    tailscale-serve = {
+      exec = ''
+        if ! command -v tailscale >/dev/null 2>&1; then
+          echo "[tailscale-serve] tailscale CLI not found; skipping HTTPS serve"
+          exit 0
+        fi
+        exec tailscale serve 5173
+      '';
+      process-compose = {
+        depends_on = {
+          frontend = {
+            condition = "process_healthy";
+          };
+        };
       };
     };
   };
@@ -64,6 +90,10 @@
         -groups "${config.env.DEVENV_ROOT}/groups" \
         -static "${config.env.DEVENV_ROOT}/dist" \
         -data "${config.env.DEVENV_STATE}/galene/data"
+    '';
+
+    "serve-reset".exec = ''
+      exec tailscale serve reset
     '';
   };
 }

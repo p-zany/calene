@@ -60,7 +60,7 @@
 
 	<!-- Top subtle branding + partner presence pill -->
 	<header
-		class="pwa-titlebar-pad pointer-events-none fixed inset-x-0 top-0 z-20 flex items-center justify-between px-5"
+		class="pwa-titlebar-pad pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5"
 	>
 		<div class="flex items-center gap-2">
 			<span class="size-2.5 rounded-full bg-accent"></span>

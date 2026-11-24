@@ -19,7 +19,9 @@
 	}
 </script>
 
-<div class="pointer-events-none fixed inset-0 z-20 flex flex-col items-center justify-center px-6">
+<div
+	class="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6"
+>
 	<div
 		class="glass-panel pointer-events-auto flex max-w-xs flex-col items-center gap-4 rounded-3xl px-7 py-6 text-center"
 	>

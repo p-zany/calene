@@ -26,7 +26,7 @@
 
 {#if snapshot}
 	<div
-		class="glass-panel safe-inset-top fixed left-4 z-50 flex items-center gap-3 rounded-2xl p-2.5 pr-3"
+		class="glass-panel safe-inset-top absolute left-4 z-50 flex items-center gap-3 rounded-2xl p-2.5 pr-3"
 	>
 		<canvas bind:this={previewCanvas} class="h-14 w-24 rounded-xl bg-black/50 object-cover"
 		></canvas>
